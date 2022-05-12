@@ -44,6 +44,7 @@ def data_clean(landmark):
 class Application:
     def __init__(self):
         self.draw = True
+        self.show_suggestions = False
         self.vs = cv2.VideoCapture(0)
         self.current_image = None
         self.gest_detector = joblib.load('model.pkl')
@@ -127,31 +128,32 @@ class Application:
             self.panel4.config(text=self.word,font=("Courier",25))
             self.panel5.config(text=self.str,font=("Courier",25))
             
-            predicts = []
-            for sugg in dictionary.suggest(self.word):
-                predicts.append(sugg)
+            if self.show_suggestions:
+                predicts = []
+                for sugg in dictionary.suggest(self.word):
+                    predicts.append(sugg)
 
-            if(len(predicts) > 0):
-                self.bt1.config(text=predicts[0],font = ("Courier",20))
-            else:
-                self.bt1.config(text="")
-            if(len(predicts) > 1):
-                self.bt2.config(text=predicts[1],font = ("Courier",20))
-            else:
-                self.bt2.config(text="")
-            if(len(predicts) > 2):
-                self.bt3.config(text=predicts[2],font = ("Courier",20))
-            else:
-                self.bt3.config(text="")
-            if(len(predicts) > 3):
-                self.bt4.config(text=predicts[3],font = ("Courier",20))
-            else:
-                self.bt4.config(text="")
-            if(len(predicts) > 4):
-                self.bt5.config(text=predicts[4],font = ("Courier",20))
-            else:
-                self.bt5.config(text="")
-            
+                if(len(predicts) > 0):
+                    self.bt1.config(text=predicts[0],font = ("Courier",20))
+                else:
+                    self.bt1.config(text="")
+                if(len(predicts) > 1):
+                    self.bt2.config(text=predicts[1],font = ("Courier",20))
+                else:
+                    self.bt2.config(text="")
+                if(len(predicts) > 2):
+                    self.bt3.config(text=predicts[2],font = ("Courier",20))
+                else:
+                    self.bt3.config(text="")
+                if(len(predicts) > 3):
+                    self.bt4.config(text=predicts[3],font = ("Courier",20))
+                else:
+                    self.bt4.config(text="")
+                if(len(predicts) > 4):
+                    self.bt5.config(text=predicts[4],font = ("Courier",20))
+                else:
+                    self.bt5.config(text="")
+
         self.root.after(30, self.video_loop)
 
     def predict(self, image):
@@ -208,7 +210,7 @@ class Application:
                     engine.runAndWait()
                     self.word = ""
             else:
-                if(len(self.str) > 16):
+                if(len(self.str) > 20):
                     self.str = ""
                 self.blank_flag = 0
                 self.word += self.current_symbol
