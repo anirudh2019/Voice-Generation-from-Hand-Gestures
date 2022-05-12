@@ -16,13 +16,6 @@ mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 dictionary = Dictionary.from_files('en_US')
 
-#!!!!!!!
-"""
-1. when landmark data is unclean
-2. pred for 'blank'                                         : Absence of Hand in image is 'Blank'
-3. # if(self.current_symbol == 'blank'): in predict()
-4. hland draw button
-"""
 
 def data_clean(landmark):
     data = landmark[0]
@@ -68,7 +61,7 @@ class Application:
         self.root.protocol('WM_DELETE_WINDOW', self.destructor)
         self.root.geometry("900x900")
         self.panel = tk.Label(self.root)                                    ### Big Image
-        self.panel.place(x = 200, y = 60, width = 500, height = 500)
+        self.panel.place(x = 50, y = 60, width = 800, height = 500)
         
         self.T = tk.Label(self.root)
         self.T.place(x=230,y = 15)
