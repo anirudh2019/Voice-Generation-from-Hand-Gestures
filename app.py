@@ -58,15 +58,15 @@ class Application:
         print("Loaded model from disk")
         
         self.root = tk.Tk()
-        self.root.title("Sign language to Text Converter")
+        self.root.title("Voice Generation from Hand Gestures")
         self.root.protocol('WM_DELETE_WINDOW', self.destructor)
         self.root.geometry("900x900")
         self.panel = tk.Label(self.root)                                    ### Big Image
         self.panel.place(x = 50, y = 60, width = 800, height = 500)
         
         self.T = tk.Label(self.root)
-        self.T.place(x=230,y = 15)
-        self.T.config(text = "Sign Language to Text",font=("courier",25,"bold"))
+        self.T.place(x=100,y = 15)
+        self.T.config(text = "Voice Generation from Hand Gestures",font=("courier",25,"bold"))
         self.panel3 = tk.Label(self.root)                                   # Current SYmbol 
         self.panel3.place(x = 300,y=560)
         self.T1 = tk.Label(self.root)
@@ -83,27 +83,25 @@ class Application:
         self.T3.place(x = 10,y = 680)
         self.T3.config(text ="Sentence :",font=("Courier",25,"bold"))
 
-        self.T4 = tk.Label(self.root)
-        self.T4.place(x = 300,y = 740)
-        self.T4.config(text = "Suggestions",fg="red",font = ("Courier",25,"bold"))
+        if self.show_suggestions:
+            self.T4 = tk.Label(self.root)
+            self.T4.place(x = 300,y = 740)
+            self.T4.config(text = "Suggestions",fg="red",font = ("Courier",25,"bold"))
 
-        self.bt1=tk.Button(self.root, command=self.action1,height = 0,width = 0)
-        self.bt1.place(x = 5,y=810)
-        #self.bt1.grid(padx = 10, pady = 10)
-        self.bt2=tk.Button(self.root, command=self.action2,height = 0,width = 0)
-        self.bt2.place(x = 130,y=810)
-        #self.panel3.place(x = 10,y=660)
-        # self.bt2.grid(row = 4, column = 1, columnspan = 1, padx = 10, pady = 10, sticky = tk.NW)
-        self.bt3=tk.Button(self.root, command=self.action3,height = 0,width = 0)
-        self.bt3.place(x = 255,y=810)
-        # self.bt3.grid(row = 4, column = 2, columnspan = 1, padx = 10, pady = 10, sticky = tk.NW)
-        self.bt4=tk.Button(self.root, command=self.action4,height = 0,width = 0)
-        self.bt4.place(x = 380,y=810)
-        # self.bt4.grid(row = bt1, column = 0, columnspan = 1, padx = 10, pady = 10, sticky = tk.N)
-        self.bt5=tk.Button(self.root, command=self.action5,height = 0,width = 0)
-        self.bt5.place(x = 505,y=810)
-        
-        # self.bt5.grid(row = 5, column = 1, columnspan = 1, padx = 10, pady = 10, sticky = tk.N)
+            self.bt1=tk.Button(self.root, command=self.action1,height = 0,width = 0)
+            self.bt1.place(x = 5,y=810)
+
+            self.bt2=tk.Button(self.root, command=self.action2,height = 0,width = 0)
+            self.bt2.place(x = 130,y=810)
+
+            self.bt3=tk.Button(self.root, command=self.action3,height = 0,width = 0)
+            self.bt3.place(x = 255,y=810)
+
+            self.bt4=tk.Button(self.root, command=self.action4,height = 0,width = 0)
+            self.bt4.place(x = 380,y=810)
+
+            self.bt5=tk.Button(self.root, command=self.action5,height = 0,width = 0)
+            self.bt5.place(x = 505,y=810)
         
         self.str=""
         self.word=""
@@ -184,14 +182,14 @@ class Application:
                 self.ct[i] = 0
 
         self.ct[self.current_symbol] += 1
-        if(self.ct[self.current_symbol] > 20):
+        if(self.ct[self.current_symbol] > 15):
             for i in ascii_uppercase:
                 if i == self.current_symbol:
                     continue
                 tmp = self.ct[self.current_symbol] - self.ct[i]
                 if tmp < 0:
                     tmp *= -1
-                if tmp <= 10:
+                if tmp <= 7:
                     self.ct['blank'] = 0
                     for i in ascii_uppercase:
                         self.ct[i] = 0
